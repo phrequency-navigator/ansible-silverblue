@@ -1,0 +1,16 @@
+---
+
+- name: Enable initramfs with fido2 and rebuild initramfs
+  ignore_errors: true
+  ansible.builtin.command:
+    cmd: rpm-ostree initramfs --enable --arg="-a fido2"
+
+- name: Install systemd-cryptenroll script
+  ansible.builtin.template:
+    src: templates/enroll_device.sh.j2
+    dest: /var/usrlocal/bin/enroll_device.sh
+    mode: '0755'
+    owner: root
+    group: root
+  become: yes
+  become_method: sudo

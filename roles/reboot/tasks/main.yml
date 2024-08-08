@@ -1,0 +1,7 @@
+---
+- name: Going down for reboot in 60 seconds
+  ansible.builtin.reboot:
+    reboot_timeout: "{{ reboot_timeout }}"
+  become: yes
+  when:
+    - booted.stdout == "false"

@@ -1,15 +1,52 @@
+# The 'fido2_luks' role #
+#########################
+
+encrypted_volume_path: /dev/nvme0n1p3
+
 # The 'layered_packages' role #
 ###############################
+
+fedora_version: '40'
+
 layered_package_install:
   - gnome-tweaks
   - net-tools
   - python3-psutil
-  - vim
+  - neovim
   - yamllint
+  - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ fedora_version }}.noarch.rpm
+  - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version }}.noarch.rpm
+  - openssl
+  - beets
+  - cdparanoia
+  - qemu
+  - ranger
+  - terminator
+  - libvirt
+  - lm_sensors
+  - pandoc
+  - virt-manager
+  - zsh
+  - nmap
+  - kismet
+  - python3-kismet-rest
+  - john
+  - cracklib-dicts
 
 base_package_remove:
   - firefox
   - firefox-lang-packs
+  - libavdevice-free
+  - libavfilter-free
+  - libavformat-free
+  - ffmpeg-free
+  - libpostproc-free
+  - libswresample-free
+  - libavutil-free
+  - libavcodec-free
+  - libswscale-free
+  - mesa-va-drivers
+
 
 # The 'flatpak' role #
 ######################
@@ -28,6 +65,27 @@ flatpak_package_install:
   - { remote: 'flathub', package: 'org.gnome.Totem' }
   - { remote: 'flathub', package: 'org.mozilla.firefox' }
   - { remote: 'flathub', package: 'org.remmina.Remmina' }
+  - { remote: 'flathub', package: 'app.drey.Warp' }
+  - { remote: 'flathub', package: 'com.github.tchx84.Flatseal' }
+  - { remote: 'flathub', package: 'com.google.Chrome' }
+  - { remote: 'flathub', package: 'com.protonvpn.www' }
+  - { remote: 'flathub', package: 'com.transmissionbt.Transmission' }
+  - { remote: 'flathub', package: 'com.usebottles.bottles' }
+  - { remote: 'flathub', package: 'com.valvesoftware.Steam' }
+  - { remote: 'flathub', package: 'com.visualstudio.code' }
+  - { remote: 'flathub', package: 'fr.handbrake.ghb' }
+  - { remote: 'flathub', package: 'io.freetubeapp.FreeTube' }
+  - { remote: 'flathub', package: 'io.github.brunofin.Cohesion' }
+  - { remote: 'flathub', package: 'io.github.gamingdoom.Datcord' }
+  - { remote: 'flathub', package: 'org.audacityteam.Audacity' }
+  - { remote: 'flathub', package: 'org.fedoraproject.MediaWriter' }
+  - { remote: 'flathub', package: 'org.gimp.GIMP' }
+  - { remote: 'flathub', package: 'org.gnome.Calculator' }
+  - { remote: 'flathub', package: 'org.gnome.Calendar' }
+  - { remote: 'flathub', package: 'org.gnome.Rhythmbox3' }
+  - { remote: 'flathub', package: 'org.signal.Signal' }
+  - { remote: 'flathub', package: 'org.videolan.VLC' }
+  - { remote: 'flathub', package: 'app.drey.Warp' }
 
 # The 'fonts' role #
 ####################
@@ -49,8 +107,8 @@ dconf_settings:
 - { key: '/org/gnome/desktop/privacy/old-files-age', value: 'uint32 14' }
 - { key: '/org/gnome/desktop/session/idle-delay', value: 'uint32 480' }
 - { key: '/org/gnome/desktop/screensaver/lock-delay', value: 'uint32 1800' }
-- { key: '/org/gnome/desktop/interface/clock-format', value: "'12h'" }
-- { key: '/org/gtk/settings/file-chooser/clock-format', value: "'12h'" }
+- { key: '/org/gnome/desktop/interface/clock-format', value: "'24h'" }
+- { key: '/org/gtk/settings/file-chooser/clock-format', value: "'24h'" }
 - { key: '/org/gnome/desktop/wm/preferences/button-layout', value: "'appmenu:minimize,maximize,close'" }
 
 # The 'os_updates' role #
@@ -58,3 +116,21 @@ dconf_settings:
 
 update_policy: stage
 idle_timeout: '600'
+
+# The 'install_service' role #
+# ############################
+base_path: /home/char/Documents/git/ansible-silverblue
+
+# The 'rpmfusion_install' role #
+################################
+
+rpmfusion_package_install:
+  - protonvpn-cli
+  - mesa-va-drivers-freeworld
+  - ffmpeg
+  - ffmpeg-thumbnailer
+
+# The reboot role #
+###################
+
+reboot_timeout: '60'

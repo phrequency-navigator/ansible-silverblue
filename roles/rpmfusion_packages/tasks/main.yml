@@ -10,13 +10,6 @@
   ansible.builtin.command: rpm-ostree cancel
   when: ostree_status.rc != 1
 
-- name: Remove applications from the base OS
-  ansible.builtin.command: rpm-ostree override remove {{ item }}
-  become: yes
-  become_method: sudo
-  ignore_errors: true
-  loop: "{{ base_package_remove }}"
-
 - name: Install desired applications as layered packages
   community.general.rpm_ostree_pkg:
     name: "{{ item }}"
@@ -24,9 +17,7 @@
     # apply_live: true  # This feature is not yet available
   become: yes
   become_method: sudo
-  loop: "{{ layered_package_install }}"
-  loop_control:
-    index_var: my_index
+  loop: "{{ rpmfusion_package_install }}"
 
 - debug:
     msg: "A reboot is required to complete installation / removal of these packages"
@@ -35,9 +26,3 @@
   shell: rpm-ostree status --json | jq -r .deployments[0].booted
   register: booted
 
-- name: Reboot if new deployement is ready.
-  reboot:
-    reboot_timeout: 300
-  become: yes
-  when:
-    - booted.stdout == "false"

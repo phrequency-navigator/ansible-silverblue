@@ -2,8 +2,11 @@
 
 - hosts: all
   roles:
+    - { role: fido2_luks }
     - { role: layered_packages }
     - { role: flatpaks }
     - { role: fonts }
     - { role: gnome_settings }
+    - { role: install_service }
     - { role: os_updates }
+    - { role: reboot }

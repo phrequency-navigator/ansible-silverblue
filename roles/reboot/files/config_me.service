@@ -1,0 +1,14 @@
+[Unit]
+Description=Config-me service to configure remaining packages post-reboot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+PIDFile=/run/config-me.pid
+ExecStartPre=/usr/bin/rm -f /run/config-me.pid
+ExecStart=/usr/local/sbin/config-me.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical.target

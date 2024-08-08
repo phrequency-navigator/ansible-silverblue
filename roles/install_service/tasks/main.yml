@@ -1,0 +1,30 @@
+---
+# tasks file for install_service role
+- name: Install config-me.service for one-shot installation of packages on boot
+  become: yes
+  become_method: sudo
+  ansible.builtin.copy:
+    src: files/config-me.service
+    dest: /etc/systemd/system/config-me.service
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: Install config-me.sh for one-shot installation of packages on boot
+  become: yes
+  become_method: sudo
+  ansible.builtin.template:
+    src: templates/config-me.sh.j2
+    dest: /usr/local/sbin/config-me.sh
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Enable config-me.service to run on next boot
+  become: yes
+  become_method: sudo
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    name: config-me.service
+    enabled: true
+

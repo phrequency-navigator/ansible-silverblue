@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - { role: rpmfusion_packages }
