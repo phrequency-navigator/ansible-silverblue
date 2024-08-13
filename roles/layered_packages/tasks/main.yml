@@ -36,6 +36,7 @@
   register: booted
 
 - name: Reboot if new deployement is ready.
+  ignore_errors: true
   reboot:
     reboot_timeout: 300
   become: yes

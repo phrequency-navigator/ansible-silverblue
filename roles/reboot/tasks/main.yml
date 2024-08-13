@@ -1,5 +1,6 @@
 ---
 - name: Going down for reboot in 60 seconds
+  ignore_errors: true
   ansible.builtin.reboot:
     reboot_timeout: "{{ reboot_timeout }}"
   become: yes

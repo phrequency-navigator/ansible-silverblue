@@ -6,7 +6,10 @@ encrypted_volume_path: /dev/nvme0n1p3
 # The 'layered_packages' role #
 ###############################
 
+## the version number
 fedora_version: '40'
+## rpm --eval "%{dist}"
+fedora_core_version: 'fc40'
 
 layered_package_install:
   - gnome-tweaks
@@ -16,6 +19,7 @@ layered_package_install:
   - yamllint
   - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ fedora_version }}.noarch.rpm
   - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version }}.noarch.rpm
+  - https://zfsonlinux.org/fedora/zfs-release-2-5.{{ fedora_core_version }}.noarch.rpm
   - openssl
   - beets
   - cdparanoia
@@ -32,6 +36,7 @@ layered_package_install:
   - python3-kismet-rest
   - john
   - cracklib-dicts
+  - htop
 
 base_package_remove:
   - firefox
@@ -67,7 +72,7 @@ flatpak_package_install:
   - { remote: 'flathub', package: 'org.remmina.Remmina' }
   - { remote: 'flathub', package: 'app.drey.Warp' }
   - { remote: 'flathub', package: 'com.github.tchx84.Flatseal' }
-  - { remote: 'flathub', package: 'com.google.Chrome' }
+  - { remote: 'flathub', package: 'io.github.ungoogled_software.ungoogled_chromium' }
   - { remote: 'flathub', package: 'com.protonvpn.www' }
   - { remote: 'flathub', package: 'com.transmissionbt.Transmission' }
   - { remote: 'flathub', package: 'com.usebottles.bottles' }
